@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>자료구조 과제 2 - 영웅 다형성 시각화 웹앱</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+
+body{
+    font-family:'Noto Sans KR',sans-serif;
+    background-color:#0f172a;
+}
+
+@keyframes screenShake{
+    0%{transform:translateX(0);}
+    25%{transform:translateX(-4px);}
+    50%{transform:translateX(4px);}
+    75%{transform:translateX(-4px);}
+    100%{transform:translateX(0);}
+}
+
+.shake{
+    animation:screenShake 0.35s ease;
+}
+</style>
+</head>
+
+<body class="text-slate-100 min-h-screen p-6 md:p-12">
+
+<header class="max-w-6xl mx-auto text-center mb-12">
+
+<span class="text-orange-500 font-bold tracking-widest text-sm uppercase">
+2026 자료구조 과제 2
+</span>
+
+<h1 class="text-3xl md:text-4xl font-extrabold mt-2 text-white">
+OOP 설계 기반 인터랙티브 웹앱
+</h1>
+
+<p class="text-slate-400 mt-2">
+상속 구조 시각화 및 다형성(Polymorphism) Dynamic 구현
+</p>
+
+</header>
+
+<main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+<!-- LEFT -->
+<div class="lg:col-span-2 space-y-8">
+
+<!-- ADT -->
+<div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 shadow-xl relative overflow-hidden">
+
+<div class="absolute top-0 right-0 bg-purple-600 text-xs px-3 py-1 rounded-bl-lg font-bold text-white">
+Abstract Class (ADT)
+</div>
+
+<h2 class="text-xl font-bold text-purple-400 flex items-center gap-2">
+<i class="fa-solid fa-layer-group"></i>
+HeroADT
+</h2>
+
+<p class="text-xs text-slate-400 mt-1">
+인터페이스 및 규격 정의 (hero_adt.py)
+</p>
+
+<div class="mt-4 flex flex-wrap gap-2 text-xs">
+
+<span class="bg-slate-700 px-3 py-1 rounded-md">
+@abstractmethod name()
+</span>
+
+<span class="bg-slate-700 px-3 py-1 rounded-md">
+@abstractmethod role()
+</span>
+
+<span class="bg-slate-700 px-3 py-1 rounded-md">
+@abstractmethod power()
+</span>
+
+<span class="bg-slate-700 px-3 py-1 rounded-md">
+@abstractmethod action()
+</span>
+
+</div>
+</div>
+
+<div class="text-center text-slate-500">
+<i class="fa-solid fa-arrow-down text-xl animate-bounce"></i>
+</div>
+
+<!-- BASE CLASS -->
+<div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 shadow-xl relative overflow-hidden">
+
+<div class="absolute top-0 right-0 bg-blue-600 text-xs px-3 py-1 rounded-bl-lg font-bold text-white">
+Base Class
+</div>
+
+<h2 class="text-xl font-bold text-blue-400 flex items-center gap-2">
+<i class="fa-solid fa-shield-halved"></i>
+Hero (HeroADT 상속)
+</h2>
+
+<p class="text-xs text-slate-400 mt-1">
+공통 속성 및 기본 action() 로직 구현 (hero.py)
+</p>
+
+<p class="text-[11px] text-blue-300 mt-2">
+상속(Inheritance) 및 다형성(Polymorphism)의 핵심 베이스 클래스
+</p>
+
+<div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+
+<div class="bg-slate-700/50 p-2 rounded border border-slate-600">
+<strong class="text-blue-300">Getters/Setters:</strong>
+name, role, power, hp
+</div>
+
+<div class="bg-slate-700/50 p-2 rounded border border-slate-600">
+<strong class="text-blue-300">기본 action():</strong>
+인자에 따른 분기 처리
+</div>
+
+</div>
+</div>
+
+<div class="text-center text-slate-500">
+<i class="fa-solid fa-arrow-down text-xl"></i>
+</div>
+
+<!-- HERO CARDS -->
+<div>
+
+<h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
+파생 서브클래스 인스턴스
+</h3>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+<!-- DPS -->
+<div
+onclick="selectHero('dps')"
+id="card-dps"
+class="cursor-pointer bg-slate-800 border-2 border-slate-700 hover:border-orange-500 rounded-xl p-5 transition-all duration-300 transform hover:-translate-y-1 shadow-lg relative group">
+
+<div class="absolute top-3 right-3 text-orange-500 text-xl opacity-40 group-hover:opacity-100">
+<i class="fa-solid fa-crosshairs"></i>
+</div>
+
+<span class="text-[10px] bg-orange-500/20 text-orange-400 border border-orange-500/30 px-2 py-0.5 rounded font-bold">
+DPS Class
+</span>
+
+<h4 class="text-xl font-bold text-white mt-2">
+메이
+</h4>
+
+<div class="mt-3 text-xs text-slate-400 space-y-1">
+<div>LV(Power): 110</div>
+<div>HP: 300</div>
+</div>
+
+<div class="mt-3">
+
+<div class="flex justify-between text-[11px] text-slate-400 mb-1">
+<span>HP</span>
+<span>300 / 300</span>
+</div>
+
+<div class="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
+<div class="bg-orange-500 h-2 rounded-full w-full"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- SUPPORT -->
+<div
+onclick="selectHero('support')"
+id="card-support"
+class="cursor-pointer bg-slate-800 border-2 border-slate-700 hover:border-emerald-500 rounded-xl p-5 transition-all duration-300 transform hover:-translate-y-1 shadow-lg relative group">
+
+<div class="absolute top-3 right-3 text-emerald-500 text-xl opacity-40 group-hover:opacity-100">
+<i class="fa-solid fa-heart-pulse"></i>
+</div>
+
+<span class="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-bold">
+Support Class
+</span>
+
+<h4 class="text-xl font-bold text-white mt-2">
+라이프 위버
+</h4>
+
+<div class="mt-3 text-xs text-slate-400 space-y-1">
+<div>LV(Power): 66</div>
+<div>HP: 225</div>
+</div>
+
+<div class="mt-3">
+
+<div class="flex justify-between text-[11px] text-slate-400 mb-1">
+<span>HP</span>
+<span>225 / 225</span>
+</div>
+
+<div class="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
+<div class="bg-emerald-500 h-2 rounded-full w-full"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- TANK -->
+<div
+onclick="selectHero('tank')"
+id="card-tank"
+class="cursor-pointer bg-slate-800 border-2 border-slate-700 hover:border-blue-500 rounded-xl p-5 transition-all duration-300 transform hover:-translate-y-1 shadow-lg relative group">
+
+<div class="absolute top-3 right-3 text-blue-500 text-xl opacity-40 group-hover:opacity-100">
+<i class="fa-solid fa-shield"></i>
+</div>
+
+<span class="text-[10px] bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded font-bold">
+Tank Class
+</span>
+
+<h4 class="text-xl font-bold text-white mt-2">
+라인하르트
+</h4>
+
+<div class="mt-3 text-xs text-slate-400 space-y-1">
+<div>LV(Power): 100</div>
+<div>HP: 700</div>
+</div>
+
+<div class="mt-3">
+
+<div class="flex justify-between text-[11px] text-slate-400 mb-1">
+<span>HP</span>
+<span>700 / 700</span>
+</div>
+
+<div class="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
+<div class="bg-blue-500 h-2 rounded-full w-full"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- RIGHT -->
+<div class="space-y-6">
+
+<!-- CONTROLLER -->
+<div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-xl">
+
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+<i class="fa-solid fa-sliders text-orange-500"></i>
+액션 컨트롤러
+</h3>
+
+<div>
+
+<p class="text-xs text-slate-400 mb-2">
+현재 선택된 대상:
+</p>
+
+<div
+id="selected-hero-badge"
+class="bg-slate-900 px-3 py-2 rounded-lg border border-slate-700 text-sm font-bold text-center text-slate-400">
+
+영웅 카드를 클릭하세요
+
+</div>
+</div>
+
+<div class="space-y-3 mt-6">
+
+<button
+onclick="executeAction('default')"
+class="w-full bg-slate-700 hover:bg-slate-600 py-2 px-4 rounded-lg text-sm flex justify-between items-center">
+
+<span>
+<i class="fa-solid fa-fist-raised mr-2 text-amber-400"></i>
+기본 공격
+</span>
+
+<code class="text-xs text-slate-400">
+.action()
+</code>
+
+</button>
+
+<button
+onclick="executeAction('heal')"
+class="w-full bg-slate-700 hover:bg-slate-600 py-2 px-4 rounded-lg text-sm flex justify-between items-center">
+
+<span>
+<i class="fa-solid fa-heart mr-2 text-emerald-400"></i>
+치유 기술
+</span>
+
+<code class="text-xs text-slate-400">
+.action(heal=...)
+</code>
+
+</button>
+
+<button
+onclick="executeAction('ult')"
+class="w-full bg-slate-700 hover:bg-slate-600 py-2 px-4 rounded-lg text-sm flex justify-between items-center">
+
+<span>
+<i class="fa-solid fa-bolt mr-2 text-red-400"></i>
+궁극기
+</span>
+
+<code class="text-xs text-slate-400">
+.action(ult=...)
+</code>
+
+</button>
+
+</div>
+</div>
+
+<!-- CONSOLE -->
+<div class="bg-slate-950 border border-slate-800 rounded-xl p-6 shadow-xl flex flex-col h-72">
+
+<div class="flex justify-between items-center mb-3">
+
+<h4 class="text-xs font-bold text-slate-400 uppercase">
+● 동적 다형성 연산 출력 Console
+</h4>
+
+<button
+onclick="clearConsole()"
+class="text-xs text-slate-500 hover:text-slate-300">
+
+Clear
+
+</button>
+
+</div>
+
+<div
+id="terminal-output"
+class="flex-1 font-mono text-xs text-emerald-400 overflow-y-auto bg-slate-900/50 p-3 rounded-lg border border-slate-800 leading-relaxed space-y-2">
+
+System: 시스템이 준비되었습니다.
+
+</div>
+
+</div>
+</div>
+
+</main>
+
+<script>
+
+const heroes = {
+
+dps:{
+    name:"메이",
+    role:"DPS",
+    power:110,
+    hp:300
+},
+
+support:{
+    name:"라이프 위버",
+    role:"서포터",
+    power:66,
+    hp:225
+},
+
+tank:{
+    name:"라인하르트",
+    role:"탱커",
+    power:100,
+    hp:700
+}
+
+};
+
+let currentSelected = null;
+
+function selectHero(heroType){
+
+currentSelected = heroType;
+
+['dps','support','tank'].forEach(type=>{
+
+const card = document.getElementById(`card-${type}`);
+
+card.classList.remove(
+    'border-orange-500',
+    'border-emerald-500',
+    'border-blue-500',
+    'bg-slate-800/80',
+    'shadow-2xl',
+    'shadow-orange-500/40',
+    'shadow-emerald-500/40',
+    'shadow-blue-500/40'
+);
+
+card.classList.add('border-slate-700');
+
+});
+
+const activeCard = document.getElementById(`card-${heroType}`);
+activeCard.classList.remove('border-slate-700');
+
+const badge = document.getElementById('selected-hero-badge');
+
+if(heroType === 'dps'){
+
+activeCard.classList.add(
+    'border-orange-500',
+    'bg-slate-800/80',
+    'shadow-2xl',
+    'shadow-orange-500/40'
+);
+
+badge.className =
+"bg-orange-500/10 px-3 py-2 rounded-lg border border-orange-500/30 text-sm font-bold text-center text-orange-400";
+
+}
+
+else if(heroType === 'support'){
+
+activeCard.classList.add(
+    'border-emerald-500',
+    'bg-slate-800/80',
+    'shadow-2xl',
+    'shadow-emerald-500/40'
+);
+
+badge.className =
+"bg-emerald-500/10 px-3 py-2 rounded-lg border border-emerald-500/30 text-sm font-bold text-center text-emerald-400";
+
+}
+
+else if(heroType === 'tank'){
+
+activeCard.classList.add(
+    'border-blue-500',
+    'bg-slate-800/80',
+    'shadow-2xl',
+    'shadow-blue-500/40'
+);
+
+badge.className =
+"bg-blue-500/10 px-3 py-2 rounded-lg border border-blue-500/30 text-sm font-bold text-center text-blue-400";
+
+}
+
+badge.innerText =
+`${heroes[heroType].name} (${heroes[heroType].role}) 선택됨`;
+
+printLog(`[System] ${heroes[heroType].name} 노드 활성화 완료.`);
+
+}
+
+function printLog(message){
+
+const consoleBox =
+document.getElementById('terminal-output');
+
+const newLine =
+document.createElement('div');
+
+const time =
+new Date().toLocaleTimeString();
+
+newLine.className =
+"border-b border-slate-800/40 pb-1";
+
+newLine.innerHTML =
+`
+<span class="text-slate-500">
+[${time}]
+</span>
+
+<span class="text-slate-500">
+&gt;
+</span>
+
+${message}
+`;
+
+consoleBox.appendChild(newLine);
+
+consoleBox.scrollTop =
+consoleBox.scrollHeight;
+
+}
+
+function clearConsole(){
+
+document.getElementById('terminal-output').innerHTML =
+'<div class="text-slate-500">&gt; 콘솔이 초기화되었습니다.</div>';
+
+}
+
+function shakeScreen(){
+
+document.body.classList.add("shake");
+
+setTimeout(()=>{
+    document.body.classList.remove("shake");
+},350);
+
+}
+
+function executeAction(actionType){
+
+if(!currentSelected){
+
+alert("먼저 영웅 카드를 선택하세요!");
+return;
+
+}
+
+const hero = heroes[currentSelected];
+
+printLog(
+`<span class="text-cyan-400">[Polymorphism]</span>
+Hero reference → ${hero.role} instance |
+동일한 action() 호출이지만
+오버라이딩된 메서드가 동적으로 실행됩니다.`
+);
+
+if(actionType === 'default'){
+
+const damage = hero.power;
+
+printLog(
+`[${hero.name}의 기본 공격!]
+기본 타격! (피해량: ${damage})
+<span class="text-blue-400 text-[11px]">
+(Hero Base Class Logic)
+</span>`
+);
+
+}
+
+else if(actionType === 'heal'){
+
+if(currentSelected === 'dps'){
+
+printLog(
+`[${hero.name}]
+DPS는 아군을 치유하는 법을 모릅니다!
+아군에게 위협만 가했습니다.
+<span class="text-orange-400 text-[11px]">
+(DPS Overridden)
+</span>`
+);
+
+}
+
+else if(currentSelected === 'support'){
+
+const healing = hero.power * 2;
+
+printLog(
+`[${hero.name}]
+서포터는 아군을 성공적으로 치유시켰습니다!
+(치유량: ${healing})
+<span class="text-emerald-400 text-[11px]">
+(Support Overridden)
+</span>`
+);
+
+}
+
+else if(currentSelected === 'tank'){
+
+printLog(
+`[${hero.name}]
+탱커는 아군 대신 공격을 막아냈습니다!
+<span class="text-blue-400 text-[11px]">
+(Tank Overridden)
+</span>`
+);
+
+}
+
+}
+
+else if(actionType === 'ult'){
+
+shakeScreen();
+
+if(currentSelected === 'dps'){
+
+const damage = hero.power * 5;
+
+printLog(
+`[${hero.name}]
+궁극기 발동: 꼼짝 마! 움직이지 마세요!
+(${damage}의 피해!)
+<span class="text-orange-400 text-[11px]">
+(DPS Overridden)
+</span>`
+);
+
+}
+
+else if(currentSelected === 'support'){
+
+const healing = hero.power * 15;
+
+printLog(
+`[${hero.name}]
+궁극기 발동: 생명은 생명을 보호해요!
+(아군 전체 ${healing} 치유)
+<span class="text-emerald-400 text-[11px]">
+(Support Overridden)
+</span>`
+);
+
+}
+
+else if(currentSelected === 'tank'){
+
+const damage = hero.power * 10;
+
+printLog(
+`[${hero.name}]
+궁극기 발동: 망치 나가신다!
+(${damage}의 피해 + 적 기절)
+<span class="text-blue-400 text-[11px]">
+(Tank Overridden)
+</span>`
+);
+
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
